@@ -1,0 +1,10 @@
+# HTB: Tartersauce Writeup w/o Metasploit
+!![tartarsauce](https://user-images.githubusercontent.com/48168337/178492785-2127e6a5-eb5a-4e29-8e75-85433288b32f.jpg)
+
+
+## Introduction
+As always we are going to start this box off with some nmap scans. 
+
+![nmap_80](https://user-images.githubusercontent.com/48168337/178493633-a762121d-4262-476c-9203-0bc995c52f69.JPG)
+
+A basic nmap scan shows us port 80 is open. 
