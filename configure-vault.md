@@ -67,7 +67,7 @@ DNS.1 = localhost
 
 Now we can approve the CSR and use the CA’s key and certificate to create a signed certificate for Vault.
 
-``sudo openssl x509 -req -in vault-server.csr -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out vault-server-cert.pem -days 3650 -extfile /opt/vault/tls/vault-san.cnf -extensions req_ext``
+``sudo openssl x509 -req -in vault-server.csr -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out vault-server-cert.pem -days 365 -extfile /opt/vault/tls/vault-san.cnf -extensions req_ext``
 
 For AWS EC2 instances, there is a directory for trusted CA certificates. It’s best to copy our CA’s certificate there to ensure the system recognizes and trusts the CA.
 
