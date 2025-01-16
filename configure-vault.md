@@ -162,7 +162,7 @@ Install bcrypt and hash password:
 ```
 python3 -m ensurepip — upgrade
 python3 -m pip install bcrypt
-python3 -c ‘import bcrypt; print(bcrypt.hashpw(b”changemenow”, bcrypt.gensalt()).decode())’
+python3 -c 'import bcrypt; print(bcrypt.hashpw(b"changemenow", bcrypt.gensalt()).decode())'
 ```
 
 Add users:
@@ -170,6 +170,9 @@ Add users:
 `` vault write auth/userpass/users/itachi policies=”admin-policy” password_hash=”\$2b\$12\$ZMJOKjSemC7JLXP5yn6PF.8A.TXMVV248m2cgP5Iv5emW8D9/Sruu”``
 
 ``vault write auth/userpass/users/naruto policies=”admin-policy” password=”changemenow”``
+
+```Please be careful when copying and pasting. You may get errors because of the quotations.
+```
 
 Perfect! Users are now created, and we can log into Vault from the front end. Open your browser and go to ``https://<your-public-ip>:8200``. Make sure to switch the sign-in method to username.
 
