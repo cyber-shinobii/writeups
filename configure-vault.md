@@ -85,7 +85,9 @@ Now we’ll update Vault’s configuration file to point to the new certificates
 
 ``sudo vi /etc/vault.d/vault.hcl``
 
-Add this:
+Update the tls_cert_file to this: ``/opt/vault/tls/vault-server-cert.pem``
+Update the tls_key_file to this: ``/opt/vault/tls/vault-server-key``
+Add ``api_addr = "https://52.23.177.32:8200"`` after the HTTP listener stanza # this should be your server's public IP address. Try not to copy and paste these entries because of editor errors.
 
 ``` listener "tcp" {
   address       = "0.0.0.0:8200"
